@@ -11,6 +11,7 @@ Model::Model(const std::string& model_filename) {
 
     // Create the session.
     TF_SessionOptions* sess_opts = TF_NewSessionOptions();
+    set_session_options(sess_opts);
 
     this->session = TF_NewSession(this->graph, sess_opts, this->status);
     TF_DeleteSessionOptions(sess_opts);
@@ -27,6 +28,7 @@ Model::Model(const std::string& model_filename) {
     this->error_check(def != nullptr, "An error occurred reading the model");
 
     TF_ImportGraphDefOptions* graph_opts = TF_NewImportGraphDefOptions();
+    set_import_graph_def_options(graph_opts);
     TF_GraphImportGraphDef(g, def, graph_opts, this->status);
     TF_DeleteImportGraphDefOptions(graph_opts);
     TF_DeleteBuffer(def);

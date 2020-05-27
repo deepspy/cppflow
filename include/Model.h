@@ -48,6 +48,10 @@ public:
     void run(const std::vector<Tensor*>& inputs, Tensor* output);
     void run(Tensor* input, Tensor* output);
 
+protected:
+    virtual void set_session_options(TF_SessionOptions& sess_opts){};
+    virtual void set_import_graph_def_options(TF_ImportGraphDefOptions& graph_opts){};
+    
 private:
     TF_Graph* graph;
     TF_Session* session;
