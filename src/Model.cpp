@@ -4,6 +4,11 @@
 
 #include "../include/Model.h"
 
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <algorithm>
+
 Model::Model(const std::string& model_filename) {
 
     this->status = TF_NewStatus();

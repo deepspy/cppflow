@@ -4,7 +4,9 @@
 
 #include "../include/Tensor.h"
 
-#include <utility>
+#include <algorithm>
+#include <numeric>
+#include <cstring>
 
 Tensor::Tensor(const Model& model, const std::string& operation) {
 

@@ -8,9 +8,6 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include <algorithm>
-#include <numeric>
-#include <cstring>
 #include <tensorflow/c/c_api.h>
 #include "Model.h"
 
