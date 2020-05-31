@@ -14,7 +14,9 @@ class Tensor;
 
 class Model {
 public:
-    explicit Model(const std::string&);
+    explicit Model(const std::string&,
+    		void (* set_session_options)(TF_SessionOptions*) = NULL,
+    		void (* set_import_graph_def_options)(TF_ImportGraphDefOptions*) = NULL);
 
     // Rule of five, moving is easy as the pointers can be copied, copying not as i have no idea how to copy
     // the contents of the pointer (i guess dereferencing won't do a deep copy)
@@ -42,10 +44,6 @@ public:
     void run(Tensor* input, const std::vector<Tensor*>& outputs);
     void run(const std::vector<Tensor*>& inputs, Tensor* output);
     void run(Tensor* input, Tensor* output);
-
-protected:
-    virtual void set_session_options(TF_SessionOptions* sess_opts){};
-    virtual void set_import_graph_def_options(TF_ImportGraphDefOptions* graph_opts){};
     
 private:
     TF_Graph* graph;

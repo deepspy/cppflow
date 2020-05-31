@@ -9,14 +9,17 @@
 #include <cstring>
 #include <algorithm>
 
-Model::Model(const std::string& model_filename) {
-
+Model::Model(const std::string& model_filename,
+		void (* set_session_options)(TF_SessionOptions*),
+		void (* set_import_graph_def_options)(TF_ImportGraphDefOptions*))
+{
     this->status = TF_NewStatus();
     this->graph = TF_NewGraph();
 
     // Create the session.
     TF_SessionOptions* sess_opts = TF_NewSessionOptions();
-    set_session_options(sess_opts);
+    if (set_session_options)
+    	set_session_options(sess_opts);
 
     this->session = TF_NewSession(this->graph, sess_opts, this->status);
     TF_DeleteSessionOptions(sess_opts);
@@ -33,7 +36,8 @@ Model::Model(const std::string& model_filename) {
     this->error_check(def != nullptr, "An error occurred reading the model");
 
     TF_ImportGraphDefOptions* graph_opts = TF_NewImportGraphDefOptions();
-    set_import_graph_def_options(graph_opts);
+    if (set_import_graph_def_options)
+    	set_import_graph_def_options(graph_opts);
     TF_GraphImportGraphDef(g, def, graph_opts, this->status);
     TF_DeleteImportGraphDefOptions(graph_opts);
     TF_DeleteBuffer(def);
